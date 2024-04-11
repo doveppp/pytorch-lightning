@@ -183,7 +183,6 @@ def save_hyperparameters(
         ignore = [arg for arg in ignore if isinstance(arg, str)]
 
     ignore = list(set(ignore))
-    init_args = {k: v for k, v in init_args.items() if k not in ignore}
 
     if not args:
         # take all arguments
@@ -199,7 +198,8 @@ def save_hyperparameters(
         else:
             hp = {arg: init_args[arg] for arg in args if isinstance(arg, str)}
             obj._hparams_name = "kwargs"
-
+            
+    hp = {k: v for k, v in hp.items() if k not in ignore}
     # `hparams` are expected here
     obj._set_hparams(hp)
 
